@@ -1,6 +1,7 @@
 import {View, Text, StyleSheet} from 'react-native'
 
 const Title = () => {
+    
     return(
         <View style={styles.titleContainer}>
             <Text style={styles.titleText}>Guess My Number</Text>

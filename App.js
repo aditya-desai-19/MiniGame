@@ -1,9 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {View, StyleSheet, ImageBackground} from 'react-native';
 import StartGameScreen from './screens/StartGameScreen';
 import Title from './components/Title';
+import GameScreen from './screens/GameScreen';
 
 const App = () => {
+  const[userNumber, setUserNumber] = useState();
+
+  const pickNumberHandler = (pickedNumber) => {
+    setUserNumber(pickedNumber);
+  }
+
+  let screen = <StartGameScreen onPick={pickNumberHandler}/>
+
+  if(userNumber){
+    screen = <GameScreen />
+  }
+  
   return (
     <View style={styles.screenContainer}>
       <ImageBackground 
@@ -13,7 +26,7 @@ const App = () => {
         imageStyle={styles.imgstyle}
       >
         <Title />
-        <StartGameScreen />
+        {screen}
       </ImageBackground>
     </View>
   )

@@ -1,16 +1,52 @@
-import { View, TextInput, StyleSheet } from "react-native";
+import { useState } from "react";
+import { View, TextInput, StyleSheet, Alert } from "react-native";
 import PrimaryButton from "../components/PrimaryButton";
 
-const StartGameScreen = () => {
+const StartGameScreen = ({onPick}) => {
+
+    const[enteredNumber, setEnteredNumber] = useState('');
+
+    const textHandler = (newValue) => {
+        setEnteredNumber(newValue);
+    };
+
+    const resetTextHandler = () => {
+        setEnteredNumber('');
+    };
+
+    const confirmHandler = () => {
+        const choosenNumber = parseInt(enteredNumber);
+
+        if(isNaN(choosenNumber) || choosenNumber <= 0 || choosenNumber >= 100) {
+            Alert.alert('Invalid Number',
+                'Enter a number which is between 0 and 100',
+                [{
+                    text: 'OK',
+                    onPress: resetTextHandler,
+                    style: 'cancel'
+                }]
+            );
+            return;
+        } else {
+            onPick(choosenNumber);
+        }
+
+    };
 
     return (
         <View style={styles.container}>
                 {/* max-lenght: restricts user to input only 2 input */}
                 {/* keyboardType: sets keyboard to specified type */}
-                <TextInput style={styles.input} maxLength={2} keyboardType="number-pad"/>
+                <TextInput 
+                    style={styles.input} 
+                    maxLength={2} 
+                    keyboardType="number-pad"
+                    onChangeText={textHandler}
+                    value={enteredNumber}
+                    />
                 <View style={styles.buttonContainer}>
-                    <PrimaryButton >Reset</PrimaryButton>
-                    <PrimaryButton>Confirm</PrimaryButton>
+                    <PrimaryButton onClick={resetTextHandler}>Reset</PrimaryButton>
+                    <PrimaryButton onClick={confirmHandler}>Confirm</PrimaryButton>
                 </View>
         </View>
     )
