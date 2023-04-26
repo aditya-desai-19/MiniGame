@@ -1,20 +1,30 @@
 import React, { useState } from 'react';
 import {View, StyleSheet, ImageBackground} from 'react-native';
 import StartGameScreen from './screens/StartGameScreen';
-import Title from './components/Title';
 import GameScreen from './screens/GameScreen';
+import GameOverScreen from './screens/GameOverScreen';
 
 const App = () => {
   const[userNumber, setUserNumber] = useState();
+  const[isGameOver, setIsGameOver] = useState(true);
 
   const pickNumberHandler = (pickedNumber) => {
     setUserNumber(pickedNumber);
+    setIsGameOver(false);
+  }
+
+  const gameOverHandler = () => {
+    setIsGameOver(true);
   }
 
   let screen = <StartGameScreen onPick={pickNumberHandler}/>
 
   if(userNumber){
-    screen = <GameScreen />
+    screen = <GameScreen correctNumber={userNumber} onGameOver={gameOverHandler}/>
+  }
+
+  if(isGameOver && userNumber){
+    screen = <GameOverScreen />
   }
   
   return (
@@ -25,7 +35,6 @@ const App = () => {
         style={styles.imgback}
         imageStyle={styles.imgstyle}
       >
-        <Title />
         {screen}
       </ImageBackground>
     </View>

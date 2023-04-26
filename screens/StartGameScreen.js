@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { View, TextInput, StyleSheet, Alert } from "react-native";
-import PrimaryButton from "../components/PrimaryButton";
+import { View, TextInput, StyleSheet, Alert, Text } from "react-native";
+import PrimaryButton from "../components/ui/PrimaryButton";
+import Title from "../components/ui/Title";
 
 const StartGameScreen = ({onPick}) => {
 
@@ -34,20 +35,24 @@ const StartGameScreen = ({onPick}) => {
     };
 
     return (
-        <View style={styles.container}>
-                {/* max-lenght: restricts user to input only 2 input */}
-                {/* keyboardType: sets keyboard to specified type */}
-                <TextInput 
-                    style={styles.input} 
-                    maxLength={2} 
-                    keyboardType="number-pad"
-                    onChangeText={textHandler}
-                    value={enteredNumber}
-                    />
-                <View style={styles.buttonContainer}>
+        <View>
+            <Title screenTitle="Guess My Number"></Title>
+            <View style={styles.container}>
+                    {/* max-lenght: restricts user to input only 2 input */}
+                    {/* keyboardType: sets keyboard to specified type */}
+                    <Text style={styles.containerText}>Enter a number</Text>
+                    <TextInput 
+                        style={styles.input} 
+                        maxLength={2} 
+                        keyboardType="number-pad"
+                        onChangeText={textHandler}
+                        value={enteredNumber}
+                        />
+                    <View style={styles.buttonContainer}>
                     <PrimaryButton onClick={resetTextHandler}>Reset</PrimaryButton>
-                    <PrimaryButton onClick={confirmHandler}>Confirm</PrimaryButton>
-                </View>
+                        <PrimaryButton onClick={confirmHandler}>Confirm</PrimaryButton>
+                    </View>
+            </View>
         </View>
     )
 }
@@ -55,7 +60,7 @@ const StartGameScreen = ({onPick}) => {
 const styles = StyleSheet.create({
     container: {
         padding: 20,
-        marginTop: 80,
+        marginTop: 50,
         marginHorizontal: 20,
         alignItems:"center",
         backgroundColor: "#B71375",
@@ -82,6 +87,11 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         marginVertical: 10
+    },
+    containerText:{
+        // fontFamily: "Roboto-Bold",
+        fontSize: 20,
+        color: "#F7D060",
     }
 });
 
