@@ -49,7 +49,7 @@ const StartGameScreen = ({onPick}) => {
                         value={enteredNumber}
                         />
                     <View style={styles.buttonContainer}>
-                    <PrimaryButton onClick={resetTextHandler}>Reset</PrimaryButton>
+                        <PrimaryButton onClick={resetTextHandler}>Reset</PrimaryButton>
                         <PrimaryButton onClick={confirmHandler}>Confirm</PrimaryButton>
                     </View>
             </View>

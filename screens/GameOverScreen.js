@@ -1,7 +1,8 @@
 import { View, Text, Image, StyleSheet } from "react-native";
 import Title from "../components/ui/Title";
+import PrimaryButton from "../components/ui/PrimaryButton";
 
-const GameOverScreen = () => {
+const GameOverScreen = (props) => {
     return (
         <View>
             <Title screenTitle="Game Over"/>
@@ -9,7 +10,15 @@ const GameOverScreen = () => {
                 <View style={styles.imageContainer}>
                     <Image style={styles.image} source={require("../images/success.png")} />
                 </View>
-            <Text>Your phone took X rounds to guess Y</Text>
+            <Text style={styles.successText}>
+                Your phone took  
+                <Text style={styles.highlightText}> {props.rounds} </Text> 
+                rounds to guess 
+                <Text style={styles.highlightText}> {props.userNumber} </Text>
+            </Text>
+            </View>
+            <View style={styles.newGamebtnContainer}>
+                <PrimaryButton onClick={props.startNewGame}>Start new game</PrimaryButton>
             </View>
         </View>
     )
@@ -22,8 +31,8 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     imageContainer: {
-        marginTop: 30,
         marginLeft: 90,
+        marginVertical: 30,
         height: 200,
         width: 200,
         borderRadius: 100,
@@ -35,6 +44,22 @@ const styles = StyleSheet.create({
     image: {
         height: "100%",
         width: "100%"
+    },
+    successText: {
+        fontSize: 20,
+        fontWeight: "bold",
+        fontFamily: "Roboto-Regular.ttf",
+        margin: 10,
+        textAlign: "center",
+    },
+    highlightText: {
+        color: "#B71375"
+    },
+    newGamebtnContainer: {
+        marginLeft: 100,
+        width: "50%",
+        alignItems: "center",
+        justifyContent: "center",
     }
 });
 

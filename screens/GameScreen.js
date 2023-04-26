@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import {View, Text, StyleSheet, Alert} from 'react-native';
+import {View, Text, StyleSheet, Alert, FlatList} from 'react-native';
 import Title from '../components/ui/Title';
 import NumberContainer from '../components/game/NumberContainer';
 import PrimaryButton from '../components/ui/PrimaryButton';
@@ -21,12 +21,20 @@ let maxBoundary = 100;
 const GameScreen = (props) => {
     const initialGuess = generateRandomBetween(1,100, props.correctNumber);
     const [currentGuess, setCurrentGuess] = useState(initialGuess);
+    const [guessLogRounds, setGuessLogRounds] = useState('');
 
+    //UseEffect for GameOver
     useEffect(() => {
         if(currentGuess === props.correctNumber){
-            props.onGameOver();
+            props.onGameOver(guessLogRounds.length);
         }}, [currentGuess, props.correctNumber, props.onGameOver]
     );
+
+    // UseEffect for resetting minBoundary and maxBoundary
+    useEffect(() => {
+        minBoundary = 1;
+        maxBoundary = 100;
+    }, []);
 
     function nextGuessHandler(direction){
         if(
@@ -43,7 +51,8 @@ const GameScreen = (props) => {
             minBoundary = currentGuess + 1;
         }
         const newRandomNumber = Math.floor(Math.random() * (maxBoundary-minBoundary)) + minBoundary;
-        setCurrentGuess(newRandomNumber)
+        setCurrentGuess(newRandomNumber);
+        setGuessLogRounds(prevLogsRounds => [newRandomNumber, ...prevLogsRounds]);
     }
 
     console.log(minBoundary);
@@ -60,8 +69,13 @@ const GameScreen = (props) => {
                     <PrimaryButton onClick={nextGuessHandler.bind(this, 'upper')}>+</PrimaryButton>
                 </View>
             </View>
-            <View>
-                {/* LOG ROUNDS */}
+            <View style={styles.logContainer}>
+                {/* {guessLogRounds.map((guessLogRound) => <Text key={guessLogRound}>{guessLogRound}</Text>)} */}
+                <FlatList
+                    data={guessLogRounds}
+                    renderItem={(itemData) => <Text style={styles.logRounds}>{itemData.item}</Text>}
+                    keyExtractor={(item) => item}
+                />
             </View>
         </View>
     )
@@ -90,6 +104,19 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         flexDirection: "row",
+    },
+    logContainer: {
+        flex:1,
+        marginVertical: 10
+    },
+    logRounds: {
+        textAlign: "center",
+        margin: 10,
+        borderRadius: 20,
+        width: 80,
+        backgroundColor: "#B71375",
+        padding: 10,
+        color: "#F7D060"
     }
 });
 
