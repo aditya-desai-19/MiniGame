@@ -12,7 +12,8 @@ const Title = (props) => {
 const styles = StyleSheet.create({
     titleContainer: {
         height: 100,
-        width: 250,
+        // width: 250,
+        maxWidth: "90%",
         borderColor: "white",
         borderWidth: 3,
         borderRadius: 5,
@@ -23,7 +24,6 @@ const styles = StyleSheet.create({
     titleText: {
         fontSize: 25,
         fontFamily: "Roboto-Regular",
-        // fontStyle: "italic",
         fontWeight: "bold",
         textAlign: "center",
         color: "white",
